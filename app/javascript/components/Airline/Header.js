@@ -1,16 +1,46 @@
 import React from 'react'
+import styled from 'styled-components'
+
+const Wrapper = styled.div`
+  padding: 50px 100px 50px 0px;
+  font-size:30px;
+
+  h1 {
+    font-size:30px;
+  }
+
+  img {
+    margin-right: 10px;
+    height: 60px;
+    width: 60px;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 100%;
+    margin-bottom: -8px;
+  }
+`
+
+const UserReviewCount = styled.div`
+  font-size: 18px;
+  padding:10px 0;
+`
+
+const ScoreOutOf = styled.div`
+  padding-top: 12px;
+  font-size: 18px;
+  font-weight: bold;
+`
 
 const Header = (props) => {
   const {name, image_url, avg_score} = props.attributes
   const numberOfReviews = props.reviews.length
 
   return (
-    <div className="wrapper">
-      <h1><img src={image_url} alt={name}/> {name}</h1>
-      <div className="totalReviews">{numberOfReviews}</div>
+    <Wrapper>
+      <h1><img src={image_url} height="50" width="50" alt={name}/> {name}</h1>
+      <UserReviewCount>{numberOfReviews}</UserReviewCount>
       <div className="starRating"></div>
-      <div className="totalOutOf">{avg_score} out of 6</div>
-    </div>
+      <ScoreOutOf>{avg_score} out of 6</ScoreOutOf>
+    </Wrapper>
   )
 }
 
