@@ -33,10 +33,7 @@ const Airlines = () => {
 
   useEffect(() => {
     axios.get('/api/v1/airlines')
-    .then( resp => {
-      setAirlines(resp.data.data)
-
-    })
+    .then( resp => setAirlines(resp.data.data))
     .catch( resp => console.log(resp) )
   }, [])
 
