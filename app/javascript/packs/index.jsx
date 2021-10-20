@@ -4,10 +4,6 @@ import ReactDOM from 'react-dom'
 import App from '../components/app'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
-const Hello = props => (
-  <div>Hello {props.name}!</div>
-)
-
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
     <Router>
