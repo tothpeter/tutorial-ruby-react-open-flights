@@ -34,7 +34,7 @@ const Main = styled.div`
 
 const Airline = (props) => {
   const [airline, setAirline] = useState({})
-  const [review, setReview] = useState({})
+  const [review, setReview] = useState({title: '', description: ''})
   const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
@@ -45,6 +45,32 @@ const Airline = (props) => {
     })
     .catch( resp => console.log(resp) )
   }, [])
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    const newReviewParams = Object.assign({}, review, {[e.target.name]: e.target.value})
+    setReview(newReviewParams)
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const airline_id = airline.data.id
+
+    axios.post('/api/v1/reviews', {review, airline_id})
+    .then( resp => {
+      const included = [...airline.included, resp.data.data]
+      setAirline({...airline, included})
+      setReview({title: '', description: '', score: 0})
+    })
+    .catch( resp => console.log(resp) )
+  }
+
+  const setRating = (score, e) => {
+    // e.preventDefault();
+    setReview({...review, score: score})
+    console.log(review);
+  }
 
   return (
     <Wrapper>
@@ -61,7 +87,13 @@ const Airline = (props) => {
             <div className="reviews"></div>
           </Column>
           <Column>
-            <ReviewForm />
+            <ReviewForm
+              review={review}
+              handleChange={handleChange}
+              handleSubmit={handleSubmit}
+              setRating={setRating}
+              attributes={airline.data.attributes}
+            />
           </Column>
         </Fragment>
       }

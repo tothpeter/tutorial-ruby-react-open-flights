@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 
 import styled from 'styled-components'
 
@@ -116,14 +116,35 @@ const Error = styled.div`
 `
 
 const ReviewForm = (props) => {
-  // const {name, image_url, avg_score} = props.attributes
-  // const numberOfReviews = props.reviews.length
+  const ratingOptions = [5, 4, 3, 2, 1].map( (score, index) => {
+    return (
+      <Fragment>
+        <input type="radio" name="rating" value={score} onChange={() => {console.log(score);}} id={`rating-${score}`} />
+        <label htmlFor={`rating-${score}`} onClick={props.setRating.bind(this, score)}></label>
+      </Fragment>
+    )
+  })
 
   return (
     <ReviewWrapper>
-      <form action="">
-        <div>Share your review</div>
-      </form>
+      <form onSubmit={props.handleSubmit}>
+        <ReviewHeadline>Have An Experience with {props.attributes.name}? Add Your Review!</ReviewHeadline>
+          <Field>
+            <input onChange={props.handleChange} type="text" name="title" placeholder="Review Title" value={props.review.title}/>
+          </Field>
+          <Field>
+            <input onChange={props.handleChange} type="text" name="description" placeholder="Review Description" value={props.review.description}/>
+          </Field>
+          <Field>
+            <RatingContainer>
+              <RatingBoxTitle>Rate This Airline</RatingBoxTitle>
+              <RatingBox>
+                {ratingOptions}
+              </RatingBox>
+            </RatingContainer>
+          </Field>
+          <SubmitBtn type="Submit">Create Review</SubmitBtn>
+        </form>
     </ReviewWrapper>
   )
 }
