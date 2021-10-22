@@ -118,7 +118,7 @@ const Error = styled.div`
 const ReviewForm = (props) => {
   const ratingOptions = [5, 4, 3, 2, 1].map( (score, index) => {
     return (
-      <Fragment>
+      <Fragment key={score}>
         <input type="radio" name="rating" checked={props.review.score == score} value={score} id={`rating-${score}`} />
         <label onClick={props.setRating.bind(this, score)}></label>
       </Fragment>
