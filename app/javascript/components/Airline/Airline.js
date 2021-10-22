@@ -4,6 +4,7 @@ import styled from 'styled-components'
 
 import Header from './Header'
 import ReviewForm from './ReviewForm'
+import Review from './Review'
 
 const Wrapper = styled.div`
   margin-left: auto;
@@ -72,6 +73,16 @@ const Airline = (props) => {
     console.log(review);
   }
 
+  let reviews
+
+  if (airline && airline.included) {
+    reviews = airline.included.map( (review, index) => {
+      return (
+        <Review key={index} review={review.attributes} />
+      )
+    })
+  }
+
   return (
     <Wrapper>
       {
@@ -84,7 +95,7 @@ const Airline = (props) => {
                 reviews={airline.included}
               />
             </Main>
-            <div className="reviews"></div>
+            {reviews}
           </Column>
           <Column>
             <ReviewForm
