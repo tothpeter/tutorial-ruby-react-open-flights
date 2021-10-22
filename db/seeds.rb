@@ -7,8 +7,12 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
-Review.delete_all
-Airline.delete_all
+tables_to_truncate = %w(reviews airlines)
+
+puts "Truncating tables: #{tables_to_truncate.join(', ')}"
+ActiveRecord::Base.connection.execute("TRUNCATE #{tables_to_truncate.join(',')} RESTART IDENTITY")
+
+puts 'Creating records'
 
 airlines = Airline.create([
   {
